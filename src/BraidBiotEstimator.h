@@ -42,7 +42,11 @@ public:
         double unorm_y =  ug::H1SemiNorm(*u.get(), "uy", this->m_uorder);
         double unorm_p =  ug::L2Norm(*u.get(), "p", this->m_porder);
 
-        double total_norm = sqrt(u_factor*(unorm_x*unorm_x  + unorm_y*unorm_y) + p_factor*unorm_p*unorm_p);
+        double pnorm = unorm_p * unorm_p; //p_factor*unorm_p*unorm_p;
+        double unorm = unorm_x*unorm_x + unorm_y*unorm_y; u_factor * (unorm_x*unorm_x + unorm_y*unorm_y);
+
+        double total_norm = sqrt(unorm+pnorm);
+
         return total_norm;
     }
 };
