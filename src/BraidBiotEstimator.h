@@ -38,18 +38,20 @@ public:
     }*/
 
     double norm(SPGridFunction u) override {
-        double unorm_x =  ug::H1SemiNorm(*u.get(), "ux", this->m_uorder);
-        double unorm_y =  ug::H1SemiNorm(*u.get(), "uy", this->m_uorder);
-        double unorm_p =  ug::L2Norm(*u.get(), "p", this->m_porder);
+        double norm_x =  ug::H1SemiNorm(*u.get(), "ux", this->m_uorder);
+        double norm_y =  ug::H1SemiNorm(*u.get(), "uy", this->m_uorder);
+        double norm_p =  ug::L2Norm(*u.get(), "p", this->m_porder);
 
-        double pnorm = unorm_p * unorm_p; //p_factor*unorm_p*unorm_p;
-        double unorm = unorm_x*unorm_x + unorm_y*unorm_y; u_factor * (unorm_x*unorm_x + unorm_y*unorm_y);
+        double pnorm = p_factor * norm_p * norm_p; //p_factor*unorm_p*unorm_p;
+        double unorm = u_factor * (norm_x*norm_x + norm_y*norm_y);
 
         double total_norm = sqrt(unorm+pnorm);
 
         return total_norm;
     }
 };
+
+
 
 
 #endif //UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTESTIMATOR_H
