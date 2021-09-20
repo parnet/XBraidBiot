@@ -10,7 +10,7 @@ set(UG4_XBraidBiot_plugin_VERSION_MINOR 0.0)
 set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS_INIT} -fPIC")
 
 set(SOURCES
-        src/xbraidbiot_plugin.cpp src/BraidBiotEstimator.cpp src/BraidBiotEstimator.h src/BriatBiotControl.cpp src/BriatBiotControl.h)
+        src/xbraidbiot_plugin.cpp src/BraidBiotEstimator.cpp src/BraidBiotEstimator.h src/BriatBiotControl.cpp src/BriatBiotControl.h src/ReadGridFunctionDirty.cpp src/ReadGridFunctionDirty.h)
 
 
 if(UG_ROOT_CMAKE_PATH)
