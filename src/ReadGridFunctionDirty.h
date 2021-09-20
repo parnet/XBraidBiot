@@ -11,6 +11,7 @@
 
 template<typename TDomain, typename TAlgebra>
 class GridFunctionIO {
+public:
     typedef ug::GridFunction<TDomain, TAlgebra> TGridFunction;
     typedef SmartPtr<TGridFunction> SPGridFunction;
 
