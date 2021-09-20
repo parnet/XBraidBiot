@@ -16,7 +16,7 @@
 
 #include "ReadGridFunctionDirty.h"
 #include "BraidBiotEstimator.h"
-#include "BriatBiotControl.h"
+#include "BraidBiotControl.h"
 
 using namespace std;
 using namespace ug::bridge;
@@ -48,18 +48,6 @@ namespace ug {
                                     //.add_method("set_adapt_convergence", &TBraidIntegrator::set_adapt_conv, "None", "initial time","set t0 as initial time")
                             .set_construct_as_smart_pointer(true);
                     reg.add_class_to_group(name_gf, "BiotBraidSpatialNorm", tag);
-                }
-
-                {
-                    typedef GridFunctionIO<TDomain, TAlgebra> TGridFunctionIO;
-                    string name_gf = string("GridFunctionIO").append(suffix);
-                    reg.add_class_<TGridFunctionIO>(name_gf, grp)
-                            .add_constructor()
-                            .add_method("write", &TGridFunctionIO::write, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("read", &TGridFunctionIO::read, "None", "verbose","set the level of verbose (true / false)")
-                                    //.add_method("set_adapt_convergence", &TBraidIntegrator::set_adapt_conv, "None", "initial time","set t0 as initial time")
-                            .set_construct_as_smart_pointer(true);
-                    reg.add_class_to_group(name_gf, "GridFunctionIO", tag);
                 }
 
 
