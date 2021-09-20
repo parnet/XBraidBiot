@@ -7,8 +7,8 @@
 
 #include "../../XBraidForUG4/src/interface/scriptor.h"
 
-#include "../../Poroelasticity/biot_tools.h"
-#include "../../Poroelasticity/barry_mercer.h"
+#include "../../Poroelasticity/src/biot_tools.h"
+#include "../../Poroelasticity/src/barry_mercer.h"
 
 template<typename TDomain, typename TAlgebra>
 class BraidBiotCheck : public Scriptor<TDomain, TAlgebra>{
