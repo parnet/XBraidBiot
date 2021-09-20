@@ -28,7 +28,7 @@ class GridFunctionIO {
         size_t szVector = u_ref->size();;
 
         outfile.open(path, std::ios::binary | std::ios::out);
-        outfile.write(&szVector, sizeof(size_t));
+        outfile.write((const char * )&szVector, sizeof(size_t));
         // write the value for each gridpoint
         for (size_t i = 0; i < szVector; i++) {
             outfile.write(&(*u_ref)[i], sizeof(TVectorValueType));
@@ -43,7 +43,7 @@ class GridFunctionIO {
         size_t szVector = 0;
         infile.open(path, std::ios::binary | std::ios::in);
         // read number of gridpoints todo consistency check?
-        infile.read(&szVector, sizeof(size_t));
+        infile.read((char * )&szVector, sizeof(size_t));
 
         // read the values for each gridpoint
         for (size_t i = 0; i < szVector; i++) {
