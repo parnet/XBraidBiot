@@ -14,7 +14,6 @@
 #include "bridge/util.h"
 #include "bridge/util_domain_algebra_dependent.h"
 
-#include "ReadGridFunctionDirty.h"
 #include "BraidBiotEstimator.h"
 #include "BraidBiotControl.h"
 
