@@ -24,7 +24,7 @@ public:
     std::vector<number> times;
 
     void write(SPGridFunction u, const char * path){
-        TGridFunction *u_ref = u->get();
+        auto *u_ref = u->get();
         std::ofstream outfile;
         size_t szVector = u_ref->size();;
 
@@ -38,7 +38,7 @@ public:
     }
 
     void read(SPGridFunction u, const char * path){
-        TGridFunction *u_ref = u->get();
+        auto *u_ref = u->get();
         std::ifstream infile;
 
         size_t szVector = 0;
