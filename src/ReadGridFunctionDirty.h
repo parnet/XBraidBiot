@@ -31,7 +31,7 @@ class GridFunctionIO {
         outfile.write((const char * )&szVector, sizeof(size_t));
         // write the value for each gridpoint
         for (size_t i = 0; i < szVector; i++) {
-            outfile.write(&(*u_ref)[i], sizeof(TVectorValueType));
+            outfile.write((const char *)&(*u_ref)[i], sizeof(TVectorValueType));
         }
         outfile.close();
     }
@@ -48,7 +48,7 @@ class GridFunctionIO {
         // read the values for each gridpoint
         for (size_t i = 0; i < szVector; i++) {
             TVectorValueType val = 0;
-            infile.read(&val, sizeof(TVectorValueType));
+            infile.read((char *)&val, sizeof(TVectorValueType));
             (*u_ref)[i] = val;
         }
         infile.close();
