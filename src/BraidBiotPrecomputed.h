@@ -171,7 +171,7 @@ public:
             err_udiffsol.compute(udiffsol->clone());
 
             // write norms
-            compare_norms(index, time, 0, 0)
+            compare_norms(index, time, 0, 0);
         }
         return false; // no error
     };
@@ -215,7 +215,7 @@ public:
             err_udiffsol.compute(udiffsol->clone());
 
             // write norms
-            compare_norms(index, time, 0, 0)
+            compare_norms(index, time, 0, 0);
         }
 
         return false; // no error
