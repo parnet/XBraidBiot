@@ -60,7 +60,6 @@ namespace ug {
                     string name_gf = string("BraidBiotCheckPrecomputed").append(suffix);
                     reg.add_class_<TBraidBiotCheckPrecomputed, TScriptor>(name_gf, grp)
                             .add_constructor()
-                            .add_method("set_problem", &TBraidBiotCheckPrecomputed::set_problem, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("compare_norms", &TBraidBiotCheckPrecomputed::compare_norms, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("set_num_ref", &TBraidBiotCheckPrecomputed::set_num_ref, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("set_max_index", &TBraidBiotCheckPrecomputed::set_max_index, "None", "verbose","set the level of verbose (true / false)")

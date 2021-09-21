@@ -29,9 +29,6 @@ public:
     typedef ug::VTKOutput <TDomain::dim> TVTKOutput;
     typedef SmartPtr <TVTKOutput> SPVTKOutput;
 
-    typedef ug::Poroelasticity::BarryMercerProblem<TDomain,TAlgebra> TProblem;
-    typedef SmartPtr <TProblem> SPProblem;
-
     typedef Paralog TParalog;
     typedef SmartPtr<TParalog> SPParalog;
 
@@ -123,10 +120,6 @@ public:
                   << std::endl;
     }
 
-
-    void set_problem(SPProblem problem) {
-        this->m_problem = problem;
-    }
 
     void set_num_ref(int ref){
         this->num_ref = ref;
