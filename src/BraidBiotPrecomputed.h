@@ -65,6 +65,10 @@ public:
 
     ~BraidBiotCheckPrecomputed() = default;
 
+    void set_log(SPParalog log){
+        this->m_log = log;
+    }
+
 
     void set_vtk_solution(SPVTKOutput vtk, const char * fname){
         this->m_sol_filename = fname;
