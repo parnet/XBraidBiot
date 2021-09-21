@@ -144,36 +144,36 @@ public:
         int zidx = (index * this->max_index_precomputed) / index_level[0];
         int rem = (index * this->max_index_precomputed) % index_level[0];
         if (rem == 0 && index != 0) {
-            SPGridFunction sol = u->clone_without_values();
-            SPGridFunction udiffsol = u->clone();
+//            SPGridFunction sol = u->clone_without_values();
+//            SPGridFunction udiffsol = u->clone();
 
             // write vtk output
-            m_out_solution->print(this->m_sol_filename, *u, index, time);
+//            m_out_solution->print(this->m_sol_filename, *u, index, time);
 
-            // load gridfunction file (ref solution)
-            IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
-            std::stringstream ss_ref;
-            if(this->num_ref == 3){
-                ss_ref << this->path_ref_3;
-            } else {
-                ss_ref << this->path_ref_4;
-            }
-            ss_ref << zidx << ".gridfunction";
-            io.read(sol, ss_ref.str().c_str());
+//            // load gridfunction file (ref solution)
+//            IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
+//            std::stringstream ss_ref;
+//            if(this->num_ref == 3){
+//                ss_ref << this->path_ref_3;
+//            } else {
+//                ss_ref << this->path_ref_4;
+            //}
+            //ss_ref << zidx << ".gridfunction";
+            //io.read(sol, ss_ref.str().c_str());
 
             // substract
-            VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
+            //VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
 
             // write vtk error
-            m_out_diff->print(this->m_diff_filename, *udiffsol, index, time);
+            //m_out_diff->print(this->m_diff_filename, *udiffsol, index, time);
 
             // compute norms
-            err_u.compute(u->clone());
-            err_sol.compute(sol->clone());
-            err_udiffsol.compute(udiffsol->clone());
+            //err_u.compute(u->clone());
+            //err_sol.compute(sol->clone());
+            //err_udiffsol.compute(udiffsol->clone());
 
             // write norms
-            compare_norms(index, time, 0, 0);
+            //compare_norms(index, time, 0, 0);
         }
         return false; // no error
     };
@@ -198,39 +198,39 @@ public:
         int rem = (index * this->max_index_precomputed) % index_level[0];
 
         if (rem == 0 && index != 0) {
-            SPGridFunction sol = u->clone_without_values();
-            SPGridFunction udiffsol = u->clone();
+//            SPGridFunction sol = u->clone_without_values();
+//            SPGridFunction udiffsol = u->clone();
 
             // write vtk output
-            std::stringstream ss_solution;
-            ss_solution << m_sol_filename << "_k" << iteration << "_l" << level << "_c" << count;
-            m_out_solution->print(ss_solution.str().c_str(), *u, index, time);
+//            std::stringstream ss_solution;
+//            ss_solution << m_sol_filename << "_k" << iteration << "_l" << level << "_c" << count;
+//            m_out_solution->print(ss_solution.str().c_str(), *u, index, time);
 
             // load gridfunction file (ref solution)
-            IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
-            std::stringstream ss_ref;
-            if(this->num_ref == 3){
-                ss_ref << this->path_ref_3;
-            } else {
-                ss_ref << this->path_ref_4;
-            }
-            ss_ref << zidx << ".gridfunction";
-            io.read(sol, ss_ref.str().c_str());
+//            IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
+//            std::stringstream ss_ref;
+//            if(this->num_ref == 3){
+//                ss_ref << this->path_ref_3;
+//            } else {
+//                ss_ref << this->path_ref_4;
+            //}
+            //ss_ref << zidx << ".gridfunction";
+            //io.read(sol, ss_ref.str().c_str());
             // substract
-            VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
+            //VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
 
             // write vtk error
-            std::stringstream ss_diff;
-            ss_diff << m_diff_filename << "_k" << iteration << "_l" << level << "_c" << count;
-            m_out_diff->print(ss_diff.str().c_str(), *udiffsol, index, time);
+            //std::stringstream ss_diff;
+            //ss_diff << m_diff_filename << "_k" << iteration << "_l" << level << "_c" << count;
+            //m_out_diff->print(ss_diff.str().c_str(), *udiffsol, index, time);
 
             // compute norms
-            err_u.compute(u->clone());
-            err_sol.compute(sol->clone());
-            err_udiffsol.compute(udiffsol->clone());
+            //err_u.compute(u->clone());
+            //err_sol.compute(sol->clone());
+            //err_udiffsol.compute(udiffsol->clone());
 
             // write norms
-            compare_norms(index, time, 0, 0);
+            //compare_norms(index, time, 0, 0);
         }
 
         return false; // no error
