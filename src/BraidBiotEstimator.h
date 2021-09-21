@@ -7,6 +7,7 @@
 
 #include <math.h>
 #include "lib_disc/function_spaces/integrate.h"
+#include "lib_disc/function_spaces/grid_function.h"
 #include "../../XBraidForUG4/src/interface/spatial_norm.h"
 
 

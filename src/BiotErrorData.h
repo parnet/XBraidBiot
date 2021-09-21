@@ -30,14 +30,13 @@ public:
     int uorder = 4;
 
     void compute(SPGridFunction u) {
-        auto *uref = u.get();
 
-        this->l2_norm_p = ug::L2Norm(uref, "p", porder);;
-        this->l2_norm_ux = ug::L2Norm(uref, "ux", uorder);
-        this->l2_norm_uy = ug::L2Norm(uref, "uy", uorder);
+        this->l2_norm_p = ug::L2Norm(*u.get(), "p", porder);;
+        this->l2_norm_ux = ug::L2Norm(*u.get(), "ux", uorder);
+        this->l2_norm_uy = ug::L2Norm(*u.get(), "uy", uorder);
 
-        this->h1_norm_ux = ug::H1SemiNorm(uref, "ux", uorder);
-        this->h1_norm_uy = ug::H1SemiNorm(uref, "uy", uorder);
+        this->h1_norm_ux = ug::H1SemiNorm(*u.get(), "ux", uorder);
+        this->h1_norm_uy = ug::H1SemiNorm(*u.get(), "uy", uorder);
 
     }
 };
