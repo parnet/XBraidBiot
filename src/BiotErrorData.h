@@ -5,6 +5,10 @@
 #ifndef UG_PLUGIN_XBRAIDBIOT_BIOTERRORDATA_H
 #define UG_PLUGIN_XBRAIDBIOT_BIOTERRORDATA_H
 
+
+#include "lib_disc/function_spaces/grid_function.h"
+
+
 class BiotErrorData {
 public:
     typedef ug::GridFunction <TDomain, TAlgebra> TGridFunction;
