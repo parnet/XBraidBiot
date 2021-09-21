@@ -121,7 +121,6 @@ public:
                   << std::endl;
     }
 
-
     void set_num_ref(int ref){
         this->num_ref = ref;
     }
