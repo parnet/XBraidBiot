@@ -9,10 +9,15 @@
 //
 
 #include "../../XBraidForUG4/src/interface/scriptor.h"
+#include "../../XBraidForUG4/src/util/paralog.h"
+
 #include "../../XBraidUtil/src/IOGridFunction.h"
 
 #include "BraidBiotEstimator.h"
 #include "BiotErrorData.h"
+
+#include "../../Poroelasticity/src/biot_tools.h"
+#include "../../Poroelasticity/src/barry_mercer.h"
 
 template<typename TDomain, typename TAlgebra>
 class BraidBiotCheckPrecomputed : public Scriptor<TDomain, TAlgebra> {
@@ -24,6 +29,7 @@ public:
     typedef ug::VTKOutput <TDomain::dim> TVTKOutput;
     typedef SmartPtr <TVTKOutput> SPVTKOutput;
 
+    typedef ug::Poroelasticity::BarryMercerProblem<TDomain,TAlgebra> TProblem;
     typedef SmartPtr <TProblem> SPProblem;
 
     typedef Paralog TParalog;
@@ -48,16 +54,19 @@ public:
     std::string path_ref_3 = "/home/mparnet/analyticsolution/num_ref_3/BarryMercer2D_";
     std::string path_ref_4 = "/home/mparnet/analyticsolution/num_ref_4/BarryMercer2D_";
 
+    typedef std::tuple<int, int, int> TKey;
+    std::map<TKey, int> map;
+
     int num_ref = 3;
 
-    BraidBiotCheck() : Scriptor<TDomain, TAlgebra>() {
-        index_level = std::vector<int>()
+    BraidBiotCheckPrecomputed() : Scriptor<TDomain, TAlgebra>() {
+        index_level = std::vector<int>();
         err_u = BiotErrorData();
         err_sol = BiotErrorData();
         err_udiffsol = BiotErrorData();
     };
 
-    ~BraidBiotCheck() = default;
+    ~BraidBiotCheckPrecomputed() = default;
 
 
     void set_vtk_solution(SPVTKOutput vtk, const char * fname){
@@ -75,7 +84,7 @@ public:
                  <<" t=" << time
                  << " iter=" <<iteration
                  <<" level=" <<level
-                 << std::endl
+                 << std::endl;
 
         m_log->o << std::setw(10) << "norm"
                   << std::setw(20) << "solution"
@@ -139,7 +148,7 @@ public:
 
 
     bool write(SPGridFunction u, int index, double time) override {
-        int z = (index * this->max_index_precomputed) / index_level[0];
+        int zidx = (index * this->max_index_precomputed) / index_level[0];
         int rem = (index * this->max_index_precomputed) % index_level[0];
         if (rem == 0 && index != 0) {
             SPGridFunction sol = u->clone_without_values();
@@ -157,7 +166,7 @@ public:
                 ss_ref << this->path_ref_4;
             }
             ss_ref << zidx << ".gridfunction";
-            io.read(udiffsol, ss_ref.str().c_str())
+            io.read(udiffsol, ss_ref.str().c_str());
 
             // substract
             VecAdd(1, *udiffsol.get(), -1, *sol.get());
@@ -177,6 +186,19 @@ public:
     };
 
     bool write(SPGridFunction u, int index, double time, int iteration, int level) override {
+
+        int count = 0;
+        auto tuple = std::make_tuple(index,iteration,level);
+        auto it = map.find(tuple);
+        if(it != map.end()){
+            count = it ->second;
+            count += 1;
+            map[tuple] = count;
+        } else {
+            count = 0;
+            map.emplace(tuple,0);
+        }
+
 
 
         int zidx = (index * this->max_index_precomputed) / index_level[0];
