@@ -12,7 +12,7 @@
 #include "../../XBraidForUG4/src/util/paralog.h"
 
 #include "../../XBraidUtil/src/IOGridFunction.h"
-
+#include "common/math/math_vector_matrix/math_vector_functions.h"
 #include "BraidBiotEstimator.h"
 #include "BiotErrorData.h"
 
