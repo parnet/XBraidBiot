@@ -5,7 +5,8 @@
 #ifndef UG_PLUGIN_XBRAIDBIOT_BIOTERRORDATA_H
 #define UG_PLUGIN_XBRAIDBIOT_BIOTERRORDATA_H
 
-
+#include <math.h>
+#include "lib_disc/function_spaces/integrate.h"
 #include "lib_disc/function_spaces/grid_function.h"
 
 
@@ -13,8 +14,9 @@
 template<typename TDomain, typename TAlgebra>
 class BiotErrorData {
 public:
-    typedef ug::GridFunction <TDomain, TAlgebra> TGridFunction;
-    typedef SmartPtr <TGridFunction> SPGridFunction;
+    typedef ug::GridFunction<TDomain, TAlgebra> TGridFunction;
+    typedef SmartPtr<TGridFunction> SPGridFunction;
+
 
     double l2_norm_p = 0.0;
     double l2_norm_ux = 0.0;
