@@ -12,7 +12,9 @@ set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS_INIT} -fPIC")
 set(SOURCES
         src/xbraidbiot_plugin.cpp
         src/BraidBiotEstimator.h
-        src/BraidBiotControl.h)
+        src/BraidBiotControl.h
+        src/BraidBiotPrecomputed.h
+        )
 
 
 if(UG_ROOT_CMAKE_PATH)
@@ -32,7 +34,7 @@ else (buildEmbeddedPlugins)
     #add_dependencies(${pluginName} UG_PLUGIN_Poroelasticity)
     LINK_DIRECTORIES(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
     #MESSAGE(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-    target_link_libraries(${pluginName} Poroelasticity)
+    target_link_libraries(${pluginName} Poroelasticity XBraidUtil)
 endif (buildEmbeddedPlugins)
 
 

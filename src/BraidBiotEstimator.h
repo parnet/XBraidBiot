@@ -16,8 +16,8 @@ public:
     typedef ug::GridFunction<TDomain, TAlgebra> TGridFunction;
     typedef SmartPtr<TGridFunction> SPGridFunction;
 
-    int m_uorder = 2;
-    int m_porder = 4;
+    int m_uorder = 4;
+    int m_porder = 2;
     double u_factor = 1;
     double p_factor = 1;
     BiotBraidSpatialNorm() : BraidSpatialNorm<TDomain,TAlgebra>(){}
@@ -50,8 +50,5 @@ public:
         return total_norm;
     }
 };
-
-
-
 
 #endif //UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTESTIMATOR_H
