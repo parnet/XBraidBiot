@@ -16,6 +16,7 @@
 
 #include "BraidBiotEstimator.h"
 #include "BraidBiotControl.h"
+#include "BraidBiotPrecomputed.h"
 
 using namespace std;
 using namespace ug::bridge;
