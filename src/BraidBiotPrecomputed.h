@@ -66,8 +66,8 @@ public:
     }
 
     void set_vtk_diff(SPVTKOutput vtk, const char * fname){
-        this->m_out_diff = fname;
-        this->m_diff_filename = vtk;
+        this->m_out_diff = vtk;
+        this->m_diff_filename = fname;
     }
 
     void compare_norms(int index, double time, int iteration, int level) {
