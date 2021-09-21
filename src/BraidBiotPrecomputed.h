@@ -158,10 +158,10 @@ public:
                 ss_ref << this->path_ref_4;
             }
             ss_ref << zidx << ".gridfunction";
-            io.read(udiffsol, ss_ref.str().c_str());
+            io.read(sol, ss_ref.str().c_str());
 
             // substract
-            VecAdd(1, *udiffsol.get(), -1, *sol.get());
+            VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
 
             // write vtk error
             m_out_diff->print(this->m_diff_filename, *udiffsol, index, time);
@@ -214,9 +214,9 @@ public:
                 ss_ref << this->path_ref_4;
             }
             ss_ref << zidx << ".gridfunction";
-            io.read(udiffsol, ss_ref.str().c_str());
+            io.read(sol, ss_ref.str().c_str());
             // substract
-            VecAdd(1, *udiffsol.get(), -1, *sol.get());
+            VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
 
             // write vtk error
             std::stringstream ss_diff;
