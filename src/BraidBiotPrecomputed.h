@@ -122,7 +122,7 @@ public:
                   << std::setw(20) << err_u.h1_norm_uy
                   << std::setw(20) << err_udiffsol.h1_norm_uy
                   << std::setw(20) << (err_udiffsol.h1_norm_uy / err_sol.h1_norm_uy)
-                  << std::endl;
+                  << std::endl << std::endl;
     }
 
     void set_num_ref(int ref){
