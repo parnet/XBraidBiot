@@ -38,9 +38,9 @@ public:
     int max_index = 512;
     int max_index_precomputed = 512;
 
-    BiotErrorData err_u;
-    BiotErrorData err_sol;
-    BiotErrorData err_udiffsol;
+    BiotErrorData<TDomain,TAlgebra> err_u;
+    BiotErrorData<TDomain,TAlgebra> err_sol;
+    BiotErrorData<TDomain,TAlgebra> err_udiffsol;
 
     const char *m_sol_filename;
     SPVTKOutput m_out_solution;
@@ -58,9 +58,9 @@ public:
 
     BraidBiotCheckPrecomputed() : Scriptor<TDomain, TAlgebra>() {
         index_level = std::vector<int>();
-        err_u = BiotErrorData();
-        err_sol = BiotErrorData();
-        err_udiffsol = BiotErrorData();
+        err_u = BiotErrorData<TDomain,TAlgebra>();
+        err_sol = BiotErrorData<TDomain,TAlgebra>();
+        err_udiffsol = BiotErrorData<TDomain,TAlgebra>();
     };
 
     ~BraidBiotCheckPrecomputed() = default;
