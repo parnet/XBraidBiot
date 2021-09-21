@@ -2,14 +2,11 @@
 // Created by parnet on 2021-09-21.
 //
 
-#ifndef UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTPRECOMPUTED_H
-#define UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTPRECOMPUTED_H
+#ifndef UG_PLUGIN_XBRAIDBIOT_BRAIDBIIOTPRECOMPUTED_H
+#define UG_PLUGIN_XBRAIDBIOT_BRAIDBIIOTPRECOMPUTED_H
 //
 // Created by parnet on 14.06.21.
 //
-
-#ifndef UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTCONTROL_H
-#define UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTCONTROL_H
 
 #include "../../XBraidForUG4/src/interface/scriptor.h"
 #include "../../XBraidUtil/src/IOGridFunction.h"
@@ -224,8 +221,5 @@ public:
         return false; // no error
     };
 };
-
-
-#endif //UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTCONTROL_H
 
 #endif //UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTPRECOMPUTED_H

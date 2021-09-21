@@ -53,6 +53,24 @@ namespace ug {
 
                 }
 
+                // Braid Time Integrator
+                {
+                    typedef BraidBiotCheckPrecomputed<TDomain, TAlgebra> TBraidBiotCheckPrecomputed;
+                    typedef Scriptor<TDomain, TAlgebra> TScriptor;
+                    string name_gf = string("BraidBiotCheckPrecomputed").append(suffix);
+                    reg.add_class_<TBraidBiotCheckPrecomputed, TScriptor>(name_gf, grp)
+                            .add_constructor()
+                            .add_method("set_problem", &TBraidBiotCheckPrecomputed::set_problem, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("compare_norms", &TBraidBiotCheckPrecomputed::compare_norms, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_num_ref", &TBraidBiotCheckPrecomputed::set_num_ref, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_max_index", &TBraidBiotCheckPrecomputed::set_max_index, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_c_factor", &TBraidBiotCheckPrecomputed::set_c_factor, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_vtk_solution", &TBraidBiotCheckPrecomputed::set_vtk_solution, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_vtk_diff", &TBraidBiotCheckPrecomputed::set_vtk_diff, "None", "verbose","set the level of verbose (true / false)")
+                            .set_construct_as_smart_pointer(true);
+                    reg.add_class_to_group(name_gf, "BraidBiotCheckPrecomputed", tag);
+                }
+
 
 
             }
@@ -111,23 +129,7 @@ namespace ug {
                 reg.add_class_to_group(name_gf, "BraidBiotCheck", tag);
             }
 
-            // Braid Time Integrator
-            {
-                typedef BraidBiotCheckPrecomputed<TDomain, TAlgebra> TBraidBiotCheckPrecomputed;
-                typedef Scriptor<TDomain, TAlgebra> TScriptor;
-                string name_gf = string("BraidBiotCheckPrecomputed").append(suffix);
-                reg.add_class_<TBraidBiotCheckPrecomputed, TScriptor>(name_gf, grp)
-                        .add_constructor()
-                        .add_method("set_problem", &TBraidBiotCheckPrecomputed::set_problem, "None", "verbose","set the level of verbose (true / false)")
-                        .add_method("compare_norms", &TBraidBiotCheckPrecomputed::compare_norms, "None", "verbose","set the level of verbose (true / false)")
-                        .add_method("set_num_ref", &TBraidBiotCheckPrecomputed::set_num_ref, "None", "verbose","set the level of verbose (true / false)")
-                        .add_method("set_max_index", &TBraidBiotCheckPrecomputed::set_max_index, "None", "verbose","set the level of verbose (true / false)")
-                        .add_method("set_c_factor", &TBraidBiotCheckPrecomputed::set_c_factor, "None", "verbose","set the level of verbose (true / false)")
-                        .add_method("set_vtk_solution", &TBraidBiotCheckPrecomputed::set_vtk_solution, "None", "verbose","set the level of verbose (true / false)")
-                        .add_method("set_vtk_diff", &TBraidBiotCheckPrecomputed::set_vtk_diff, "None", "verbose","set the level of verbose (true / false)")
-                        .set_construct_as_smart_pointer(true);
-                reg.add_class_to_group(name_gf, "BraidBiotCheckPrecomputed", tag);
-            }
+
         }
     };
 
