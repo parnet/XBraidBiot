@@ -144,22 +144,22 @@ public:
         int zidx = (index * this->max_index_precomputed) / index_level[0];
         int rem = (index * this->max_index_precomputed) % index_level[0];
         if (rem == 0 && index != 0) {
-//            SPGridFunction sol = u->clone_without_values();
-//            SPGridFunction udiffsol = u->clone();
+            SPGridFunction sol = u->clone_without_values();
+            SPGridFunction udiffsol = u->clone();
 
             // write vtk output
-//            m_out_solution->print(this->m_sol_filename, *u, index, time);
+            m_out_solution->print(this->m_sol_filename, *u, index, time);
 
-//            // load gridfunction file (ref solution)
-//            IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
-//            std::stringstream ss_ref;
-//            if(this->num_ref == 3){
-//                ss_ref << this->path_ref_3;
-//            } else {
-//                ss_ref << this->path_ref_4;
-            //}
-            //ss_ref << zidx << ".gridfunction";
-            //io.read(sol, ss_ref.str().c_str());
+            // load gridfunction file (ref solution)
+            IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
+            std::stringstream ss_ref;
+            if(this->num_ref == 3){
+                ss_ref << this->path_ref_3;
+            } else {
+                ss_ref << this->path_ref_4;
+            }
+            ss_ref << zidx << ".gridfunction";
+            io.read(sol, ss_ref.str().c_str());
 
             // substract
             //VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
