@@ -162,13 +162,13 @@ public:
             io.read(sol, ss_ref.str().c_str());
 
             // substract
-            //VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
+            VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
 
             // write vtk error
-            //m_out_diff->print(this->m_diff_filename, *udiffsol, index, time);
+            m_out_diff->print(this->m_diff_filename, *udiffsol, index, time);
 
             // compute norms
-            //err_u.compute(u->clone());
+            err_u.compute(u->clone());
             //err_sol.compute(sol->clone());
             //err_udiffsol.compute(udiffsol->clone());
 
