@@ -7,6 +7,9 @@
 
 class BiotErrorData {
 public:
+    typedef ug::GridFunction <TDomain, TAlgebra> TGridFunction;
+    typedef SmartPtr <TGridFunction> SPGridFunction;
+
     double l2_norm_p = 0.0;
     double l2_norm_ux = 0.0;
     double l2_norm_uy = 0.0;
