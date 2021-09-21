@@ -144,7 +144,7 @@ public:
 
 
     bool lua_write(SPGridFunction u, int index, double time){
-        this->write(u,index,time);
+        return this->write(u,index,time);
     }
 
     bool write(SPGridFunction u, int index, double time) override {
