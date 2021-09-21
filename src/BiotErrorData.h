@@ -9,6 +9,8 @@
 #include "lib_disc/function_spaces/grid_function.h"
 
 
+
+template<typename TDomain, typename TAlgebra>
 class BiotErrorData {
 public:
     typedef ug::GridFunction <TDomain, TAlgebra> TGridFunction;
