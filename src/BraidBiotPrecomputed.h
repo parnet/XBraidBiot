@@ -35,7 +35,6 @@ public:
     typedef Paralog TParalog;
     typedef SmartPtr<TParalog> SPParalog;
 
-    SPProblem m_problem;
     std::vector<int> index_level;
 
     int max_index = 512;
@@ -222,7 +221,7 @@ public:
                 ss_ref << this->path_ref_4;
             }
             ss_ref << zidx << ".gridfunction";
-            io.read(udiffsol, ss_ref.str().c_str())
+            io.read(udiffsol, ss_ref.str().c_str());
             // substract
             VecAdd(1, *udiffsol.get(), -1, *sol.get());
 
