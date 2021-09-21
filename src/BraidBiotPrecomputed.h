@@ -13,6 +13,7 @@
 
 #include "../../XBraidUtil/src/IOGridFunction.h"
 #include "common/math/math_vector_matrix/math_vector_functions.h"
+#include "lib_algebra/vector_interface/vec_functions.h"
 #include "BraidBiotEstimator.h"
 #include "BiotErrorData.h"
 
