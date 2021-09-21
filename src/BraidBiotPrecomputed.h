@@ -143,6 +143,10 @@ public:
     }
 
 
+    bool lua_write(SPGridFunction u, int index, double time){
+        this->write(u,index,time);
+    }
+
     bool write(SPGridFunction u, int index, double time) override {
         int zidx = (index * this->max_index_precomputed) / index_level[0];
         int rem = (index * this->max_index_precomputed) % index_level[0];
