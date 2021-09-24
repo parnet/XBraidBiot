@@ -71,7 +71,6 @@ public:
         this->m_log = log;
     }
 
-
     void set_vtk_solution(SPVTKOutput vtk, const char * fname){
         this->m_sol_filename = fname;
         this->m_out_solution = vtk;
