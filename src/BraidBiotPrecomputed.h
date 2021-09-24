@@ -81,11 +81,12 @@ public:
         this->m_diff_filename = fname;
     }
 
-    void compare_norms(int index, double time, int iteration, int level) {
+    void compare_norms(int index, double time, int iteration, int level, bool done) {
         m_log->o << "norms idx=" <<index
                  <<" t=" << time
                  << " iter=" <<iteration
                  <<" level=" <<level
+                 <<" done="<< done
                  << std::endl;
 
         m_log->o << std::setw(10) << "norm"
@@ -185,7 +186,7 @@ public:
             err_udiffsol.compute(udiffsol->clone());
 
             // write norms
-            compare_norms(index, time, 0, 0);
+            compare_norms(index, time, 0, 0,true);
         }
         return false; // no error
     };
@@ -246,7 +247,7 @@ public:
             err_udiffsol.compute(udiffsol->clone());
 
             // write norms
-            compare_norms(index, time, iteration, level);
+            compare_norms(index, time, iteration, level,false);
         }
 
         return false; // no error
