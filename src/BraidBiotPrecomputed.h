@@ -224,9 +224,13 @@ public:
             std::stringstream ss_ref;
             if(this->num_ref == 3){
                 ss_ref << this->path_ref_3;
-            } else {
+            } else if (this->num_ref == 4){
                 ss_ref << this->path_ref_4;
-           }
+            } else if(this->num_ref == 5){
+                ss_ref << this->path_ref_5;
+            } else if(this->num_ref == 6){
+                ss_ref << this->path_ref_6;
+            }
            ss_ref << zidx << ".gridfunction";
             io.read(sol, ss_ref.str().c_str());
             // substract
