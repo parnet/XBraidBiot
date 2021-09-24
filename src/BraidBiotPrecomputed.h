@@ -51,6 +51,7 @@ public:
     std::string path_ref_3 = "/home/mparnet/analyticsolution/num_ref_3/BarryMercer2D_";
     std::string path_ref_4 = "/home/mparnet/analyticsolution/num_ref_4/BarryMercer2D_";
     std::string path_ref_5 = "/home/mparnet/analyticsolution/num_ref_5/BarryMercer2D_";
+    std::string path_ref_6 = "/home/mparnet/analyticsolution/num_ref_6/BarryMercer2D_";
 
     typedef std::tuple<int, int, int> TKey;
     std::map<TKey, int> map;
@@ -167,6 +168,8 @@ public:
                 ss_ref << this->path_ref_4;
             } else if(this->num_ref == 5){
                 ss_ref << this->path_ref_5;
+            } else if(this->num_ref == 6){
+                ss_ref << this->path_ref_6;
             }
             ss_ref << zidx << ".gridfunction";
             io.read(sol, ss_ref.str().c_str());
