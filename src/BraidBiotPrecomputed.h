@@ -142,7 +142,7 @@ public:
     void set_c_factor(int level, int factor) {
         index_level.resize(level + 2);
         index_level[level + 1] = index_level[level] / factor;
-        this->m_log->o << "level: " << index_level[level] << "\t" << factor << "\t" << index_level[level+1];
+        this->m_log->o << "level: " << index_level[level] << "\t" << factor << "\t" << index_level[level+1] << std::endl;
     }
 
 
