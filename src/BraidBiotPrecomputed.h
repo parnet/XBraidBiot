@@ -81,46 +81,47 @@ public:
         this->m_diff_filename = fname;
     }
 
-    void compare_norms(int index, double time, int iteration, int level, bool done) {
-        m_log->o << "norms idx=" <<index
+    void compare_norms(int index, double time, int iteration, int level, int c, bool done) {
+        m_log->o << ">> norms idx=" <<index
                  <<" t=" << time
                  << " iter=" <<iteration
                  <<" level=" <<level
+                 <<" c=" <<c
                  <<" done="<< done
                  << std::endl;
 
-        m_log->o << std::setw(10) << "norm"
+        m_log->o << std::setw(10) << ">> norm"
                   << std::setw(20) << "solution"
                   << std::setw(20) << "error"
                   << std::setw(20) << "relative"
                   << std::endl;
 
-        m_log->o << std::setw(10) << "l2(p)"
+        m_log->o << std::setw(10) << ">> l2(p)"
                   << std::setw(20) << err_u.l2_norm_p
                   << std::setw(20) << err_udiffsol.l2_norm_p
                   << std::setw(20) << (err_udiffsol.l2_norm_p / err_sol.l2_norm_p)
                   << std::endl;
 
-        m_log->o << std::setw(10) << "l2(ux)"
+        m_log->o << std::setw(10) << ">> l2(ux)"
                   << std::setw(20) << err_u.l2_norm_ux
                   << std::setw(20) << err_udiffsol.l2_norm_ux
                   << std::setw(20) << (err_udiffsol.l2_norm_ux / err_sol.l2_norm_ux)
                   << std::endl;
 
-        m_log->o << std::setw(10) << "l2(uy)"
+        m_log->o << std::setw(10) << ">> l2(uy)"
                   << std::setw(20) << err_u.l2_norm_uy
                   << std::setw(20) << err_udiffsol.l2_norm_uy
                   << std::setw(20) << (err_udiffsol.l2_norm_uy / err_sol.l2_norm_uy)
                   << std::endl;
 
 
-        m_log->o << std::setw(10) << "h1(ux)"
+        m_log->o << std::setw(10) << ">> h1(ux)"
                   << std::setw(20) << err_u.h1_norm_ux
                   << std::setw(20) << err_udiffsol.h1_norm_ux
                   << std::setw(20) << (err_udiffsol.h1_norm_ux / err_sol.h1_norm_ux)
                   << std::endl;
 
-        m_log->o << std::setw(10) << "h1(uy)"
+        m_log->o << std::setw(10) << ">> h1(uy)"
                   << std::setw(20) << err_u.h1_norm_uy
                   << std::setw(20) << err_udiffsol.h1_norm_uy
                   << std::setw(20) << (err_udiffsol.h1_norm_uy / err_sol.h1_norm_uy)
@@ -186,7 +187,7 @@ public:
             err_udiffsol.compute(udiffsol->clone());
 
             // write norms
-            compare_norms(index, time, 0, 0,true);
+            compare_norms(index, time, 0, 0,0,true);
         }
         return false; // no error
     };
@@ -247,7 +248,7 @@ public:
             err_udiffsol.compute(udiffsol->clone());
 
             // write norms
-            compare_norms(index, time, iteration, level,false);
+            compare_norms(index, time, iteration, level,count,false);
         }
 
         return false; // no error
