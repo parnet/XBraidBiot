@@ -219,7 +219,7 @@ public:
             std::stringstream ss_solution;
             ss_solution << m_sol_filename << "_k" << iteration << "_l" << level << "_c" << count;
             m_out_solution->print(ss_solution.str().c_str(), *u, index, time);
-
+            std::cout << ss_solution.str().c_str() << std::endl;
             // load gridfunction file (ref solution)
             IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
             std::stringstream ss_ref;
