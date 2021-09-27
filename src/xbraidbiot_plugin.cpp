@@ -68,6 +68,7 @@ namespace ug {
                             .add_method("set_vtk_diff", &TBraidBiotCheckPrecomputed::set_vtk_diff, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("lua_write", &TBraidBiotCheckPrecomputed::lua_write, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("set_log", &TBraidBiotCheckPrecomputed::set_log, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_write_mode", &TBraidBiotCheckPrecomputed::set_write_mode, "None", "verbose","set the level of verbose (true / false)")
                             .set_construct_as_smart_pointer(true);
                     reg.add_class_to_group(name_gf, "BraidBiotCheckPrecomputed", tag);
                 }

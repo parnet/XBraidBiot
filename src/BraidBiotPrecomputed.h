@@ -38,6 +38,9 @@ public:
     int max_index = 512;
     int max_index_precomputed = 512;
 
+    bool write_solution = false;
+    bool write_error = false;
+
     BiotErrorData<TDomain,TAlgebra> err_u;
     BiotErrorData<TDomain,TAlgebra> err_sol;
     BiotErrorData<TDomain,TAlgebra> err_udiffsol;
@@ -145,6 +148,10 @@ public:
         this->m_log->o << "level: " << index_level[level] << "\t" << factor << "\t" << index_level[level+1] << std::endl;
     }
 
+    void set_write_mode(bool solution, bool  error){
+        this->write_solution = solution;
+        this->write_error = error;
+    }
 
     bool lua_write(SPGridFunction u, int index, double time){
         return this->write(u,index,time);
@@ -158,7 +165,9 @@ public:
             SPGridFunction udiffsol = u->clone();
 
             // write vtk output
-            m_out_solution->print(this->m_sol_filename, *u, index, time);
+            if(this->write_solution) {
+                m_out_solution->print(this->m_sol_filename, *u, index, time);
+            }
 
             // load gridfunction file (ref solution)
             IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
@@ -179,7 +188,9 @@ public:
             VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
 
             // write vtk error
-            m_out_diff->print(this->m_diff_filename, *udiffsol, index, time);
+            if(this->write_error) {
+                m_out_diff->print(this->m_diff_filename, *udiffsol, index, time);
+            }
 
             // compute norms
             err_u.compute(u->clone());
@@ -218,7 +229,9 @@ public:
             // write vtk output
             std::stringstream ss_solution;
             ss_solution << m_sol_filename << "_k" << iteration << "_l" << level << "_c" << count;
-            m_out_solution->print(ss_solution.str().c_str(), *u, index, time);
+            if(this->write_solution) {
+                m_out_solution->print(ss_solution.str().c_str(), *u, index, time);
+            }
             std::cout << ss_solution.str().c_str() << std::endl;
             // load gridfunction file (ref solution)
             IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
@@ -242,7 +255,9 @@ public:
             // write vtk error
             std::stringstream ss_diff;
             ss_diff << m_diff_filename << "_k" << iteration << "_l" << level << "_c" << count;
-            m_out_diff->print(ss_diff.str().c_str(), *udiffsol, index, time);
+            if(this->write_error) {
+                m_out_diff->print(ss_diff.str().c_str(), *udiffsol, index, time);
+            }
 
             // compute norms
             err_u.compute(u->clone());
