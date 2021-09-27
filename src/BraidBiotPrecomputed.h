@@ -233,6 +233,8 @@ public:
                 ss_ref << this->path_ref_6;
             }
            ss_ref << zidx << ".gridfunction";
+            std::cout << index << "\t";
+            std::cout << ss_ref.str().c_str() << std::endl;
             io.read(sol, ss_ref.str().c_str());
             // substract
             VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
