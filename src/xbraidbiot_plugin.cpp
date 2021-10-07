@@ -63,12 +63,14 @@ namespace ug {
                             .add_method("compare_norms", &TBraidBiotCheckPrecomputed::compare_norms, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("set_num_ref", &TBraidBiotCheckPrecomputed::set_num_ref, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("set_max_index", &TBraidBiotCheckPrecomputed::set_max_index, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_base_path", &TBraidBiotCheckPrecomputed::set_base_path, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("set_c_factor", &TBraidBiotCheckPrecomputed::set_c_factor, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_vtk_solution", &TBraidBiotCheckPrecomputed::set_vtk_solution, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_vtk_diff", &TBraidBiotCheckPrecomputed::set_vtk_diff, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_solution_name", &TBraidBiotCheckPrecomputed::set_solution_name, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_diff_name", &TBraidBiotCheckPrecomputed::set_diff_name, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("lua_write", &TBraidBiotCheckPrecomputed::lua_write, "None", "verbose","set the level of verbose (true / false)")
                             .add_method("set_log", &TBraidBiotCheckPrecomputed::set_log, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_write_mode", &TBraidBiotCheckPrecomputed::set_write_mode, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_vtk_write_mode", &TBraidBiotCheckPrecomputed::set_vtk_write_mode, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("set_io_write_mode", &TBraidBiotCheckPrecomputed::set_io_write_mode, "None", "verbose","set the level of verbose (true / false)")
                             .set_construct_as_smart_pointer(true);
                     reg.add_class_to_group(name_gf, "BraidBiotCheckPrecomputed", tag);
                 }

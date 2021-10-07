@@ -9,6 +9,7 @@
 //
 
 #include "../../XBraidForUG4/src/interface/scriptor.h"
+#include "../../XBraidForUG4/src/util/Scriptor.h"
 #include "../../XBraidForUG4/src/util/paralog.h"
 
 #include "../../XBraidUtil/src/IOGridFunction.h"
@@ -27,8 +28,14 @@ public:
     typedef ug::GridFunction <TDomain, TAlgebra> TGridFunction;
     typedef SmartPtr <TGridFunction> SPGridFunction;
 
-    typedef ug::VTKOutput <TDomain::dim> TVTKOutput;
-    typedef SmartPtr <TVTKOutput> SPVTKOutput;
+    typedef ug::VTKOutput<TDomain::dim> TVTKOutput;
+    typedef SmartPtr<TVTKOutput> SPVTKOutput;
+
+    typedef VTKScriptor<TDomain,TAlgebra> TVTKScriptor;
+    typedef SmartPtr <TVTKScriptor> SPVTKScriptor;
+
+    typedef IOScriptor<TDomain,TAlgebra> TIOScriptor;
+    typedef SmartPtr <TIOScriptor> SPIOScriptor;
 
     typedef Paralog TParalog;
     typedef SmartPtr<TParalog> SPParalog;
@@ -41,20 +48,21 @@ public:
     bool write_solution = false;
     bool write_error = false;
 
+    bool io_write_solution = false;
+    bool io_write_error = false;
+
     BiotErrorData<TDomain,TAlgebra> err_u;
     BiotErrorData<TDomain,TAlgebra> err_sol;
     BiotErrorData<TDomain,TAlgebra> err_udiffsol;
 
-    const char *m_sol_filename;
-    SPVTKOutput m_out_solution;
-    const char *m_diff_filename;
-    SPVTKOutput m_out_diff;
+    SPVTKScriptor m_out_solution;
+    SPVTKScriptor m_out_diff;
+    SPIOScriptor m_ioout_solution;
+    SPIOScriptor m_ioout_diff;
     SPParalog m_log;
 
-    std::string path_ref_3 = "/home/mparnet/analyticsolution/num_ref_3/BarryMercer2D_";
-    std::string path_ref_4 = "/home/mparnet/analyticsolution/num_ref_4/BarryMercer2D_";
-    std::string path_ref_5 = "/home/mparnet/analyticsolution/num_ref_5/BarryMercer2D_";
-    std::string path_ref_6 = "/home/mparnet/analyticsolution/num_ref_6/BarryMercer2D_";
+    std::string base_path = "/home/mparnet/analyticsolution";
+
 
     typedef std::tuple<int, int, int> TKey;
     std::map<TKey, int> map;
@@ -74,14 +82,19 @@ public:
         this->m_log = log;
     }
 
-    void set_vtk_solution(SPVTKOutput vtk, const char * fname){
-        this->m_sol_filename = fname;
-        this->m_out_solution = vtk;
+    void set_base_path(std::string path){
+        this->base_path = path;
     }
 
-    void set_vtk_diff(SPVTKOutput vtk, const char * fname){
-        this->m_out_diff = vtk;
-        this->m_diff_filename = fname;
+    void set_solution_name(SPVTKOutput vtk, const char * fname){
+        this->m_out_solution = make_sp(new TVTKScriptor(vtk,fname));
+        this->m_ioout_solution = make_sp(new TIOScriptor(fname));
+
+    }
+
+    void set_diff_name(SPVTKOutput vtk, const char * fname){
+        this->m_out_diff = make_sp(new TVTKScriptor(vtk,fname));
+        this->m_ioout_diff = make_sp(new TIOScriptor(fname));
     }
 
     void compare_norms(int index, double time, int iteration, int level, int c, bool done) {
@@ -148,9 +161,14 @@ public:
         this->m_log->o << "level: " << index_level[level] << "\t" << factor << "\t" << index_level[level+1] << std::endl;
     }
 
-    void set_write_mode(bool solution, bool  error){
+    void set_vtk_write_mode(bool solution, bool  error){
         this->write_solution = solution;
         this->write_error = error;
+    }
+
+    void set_io_write_mode(bool solution, bool  error){
+        this->io_write_solution = solution;
+        this->io_write_error = error;
     }
 
     bool lua_write(SPGridFunction u, int index, double time){
@@ -166,22 +184,18 @@ public:
 
             // write vtk output
             if(this->write_solution) {
-                m_out_solution->print(this->m_sol_filename, *u, index, time);
+                m_out_solution->write(u,index,time);
             }
+
+            if(this->io_write_solution) {
+                m_ioout_solution->write(u,index,time);
+            }
+
 
             // load gridfunction file (ref solution)
             IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
             std::stringstream ss_ref;
-            if(this->num_ref == 3){
-                ss_ref << this->path_ref_3;
-            } else if (this->num_ref == 4){
-                ss_ref << this->path_ref_4;
-            } else if(this->num_ref == 5){
-                ss_ref << this->path_ref_5;
-            } else if(this->num_ref == 6){
-                ss_ref << this->path_ref_6;
-            }
-            ss_ref << zidx << ".gridfunction";
+            ss_ref << this->base_path << "/num_ref" << this->num_ref << "/BarryMercer2D_" << zidx << ".gridfunction";
             io.read(sol, ss_ref.str().c_str());
 
             // substract
@@ -189,7 +203,11 @@ public:
 
             // write vtk error
             if(this->write_error) {
-                m_out_diff->print(this->m_diff_filename, *udiffsol, index, time);
+                m_out_diff->write(udiffsol, index, time);
+            }
+
+            if(this->io_write_error) {
+                m_ioout_diff->write(udiffsol, index, time);
             }
 
             // compute norms
@@ -227,25 +245,17 @@ public:
             SPGridFunction udiffsol = u->clone();
 
             // write vtk output
-            std::stringstream ss_solution;
-            ss_solution << m_sol_filename << "_k" << iteration << "_l" << level << "_c" << count;
             if(this->write_solution) {
-                m_out_solution->print(ss_solution.str().c_str(), *u, index, time);
+                m_out_solution->write(u, index, time,iteration,level);
             }
-            std::cout << ss_solution.str().c_str() << std::endl;
+            if(this->io_write_solution) {
+                m_ioout_solution->write(u, index, time,iteration,level);
+            }
+
             // load gridfunction file (ref solution)
             IOGridFunction<TDomain,TAlgebra> io = IOGridFunction<TDomain,TAlgebra>();
             std::stringstream ss_ref;
-            if(this->num_ref == 3){
-                ss_ref << this->path_ref_3;
-            } else if (this->num_ref == 4){
-                ss_ref << this->path_ref_4;
-            } else if(this->num_ref == 5){
-                ss_ref << this->path_ref_5;
-            } else if(this->num_ref == 6){
-                ss_ref << this->path_ref_6;
-            }
-           ss_ref << zidx << ".gridfunction";
+            ss_ref << this->base_path << "/num_ref" << this->num_ref << "/BarryMercer2D_" << zidx << ".gridfunction";
             std::cout << index << "\t";
             std::cout << ss_ref.str().c_str() << std::endl;
             io.read(sol, ss_ref.str().c_str());
@@ -253,10 +263,11 @@ public:
             VecAdd(1.0, *udiffsol.get(), -1.0, *sol.get());
 
             // write vtk error
-            std::stringstream ss_diff;
-            ss_diff << m_diff_filename << "_k" << iteration << "_l" << level << "_c" << count;
-            if(this->write_error) {
-                m_out_diff->print(ss_diff.str().c_str(), *udiffsol, index, time);
+            if(this->write_solution) {
+                m_out_diff->write(udiffsol, index, time,iteration,level);
+            }
+            if(this->io_write_solution) {
+                m_ioout_diff->write(udiffsol, index, time,iteration,level);
             }
 
             // compute norms
