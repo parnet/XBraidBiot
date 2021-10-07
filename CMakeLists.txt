@@ -34,7 +34,7 @@ else (buildEmbeddedPlugins)
     #add_dependencies(${pluginName} UG_PLUGIN_Poroelasticity)
     LINK_DIRECTORIES(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
     #MESSAGE(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-    target_link_libraries(${pluginName} Poroelasticity XBraidUtil)
+    target_link_libraries(${pluginName} Poroelasticity XBraidForUG4 XBraidUtil)
 endif (buildEmbeddedPlugins)
 
 
