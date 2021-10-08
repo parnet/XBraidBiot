@@ -11,9 +11,9 @@ set(CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS_INIT} -fPIC")
 
 set(SOURCES
         src/xbraidbiot_plugin.cpp
-        src/BraidBiotEstimator.h
-        src/BraidBiotControl.h
-        src/BraidBiotPrecomputed.h
+        src/braid_biot_estimator.h
+        src/braid_biot_control.h
+        src/braid_biot_precomputed.h
         )
 
 

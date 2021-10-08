@@ -14,10 +14,10 @@
 #include "bridge/util.h"
 #include "bridge/util_domain_algebra_dependent.h"
 
-#include "BraidBiotEstimator.h"
-#include "BraidBiotControl.h"
+#include "braid_biot_estimator.h"
+#include "braid_biot_control.h"
 
-#include "BraidBiotPrecomputed.h"
+#include "braid_biot_precomputed.h"
 
 
 using namespace std;
@@ -39,13 +39,16 @@ namespace ug {
                 // Braid Time Integrator
                 {
                     typedef BiotBraidSpatialNorm<TDomain, TAlgebra> TBiotSpatialNorm;
-                    typedef BraidSpatialNorm<TDomain, TAlgebra> TSpatialNorm;
+                    typedef ug::XBraidForUG4::BraidSpatialNorm<TDomain, TAlgebra> TSpatialNorm;
                     string name_gf = string("BiotBraidSpatialNorm").append(suffix);
                     reg.add_class_<TBiotSpatialNorm, TSpatialNorm>(name_gf, grp)
                             .add_constructor()
-                            .add_method("norm", &TBiotSpatialNorm::norm, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_order", &TBiotSpatialNorm::set_order, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_parameter", &TBiotSpatialNorm::set_parameter, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("norm", &TBiotSpatialNorm::norm, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_order", &TBiotSpatialNorm::set_order, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_parameter", &TBiotSpatialNorm::set_parameter, "None", "verbose",
+                                        "set the level of verbose (true / false)")
 
                                     //.add_method("set_adapt_convergence", &TBraidIntegrator::set_adapt_conv, "None", "initial time","set t0 as initial time")
                             .set_construct_as_smart_pointer(true);
@@ -56,25 +59,35 @@ namespace ug {
                 // Braid Time Integrator
                 {
                     typedef BraidBiotCheckPrecomputed<TDomain, TAlgebra> TBraidBiotCheckPrecomputed;
-                    typedef Scriptor<TDomain, TAlgebra> TScriptor;
+                    typedef ug::XBraidForUG4::Scriptor<TDomain, TAlgebra> TScriptor;
                     string name_gf = string("BraidBiotCheckPrecomputed").append(suffix);
                     reg.add_class_<TBraidBiotCheckPrecomputed, TScriptor>(name_gf, grp)
                             .add_constructor()
-                            .add_method("compare_norms", &TBraidBiotCheckPrecomputed::compare_norms, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_num_ref", &TBraidBiotCheckPrecomputed::set_num_ref, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_max_index", &TBraidBiotCheckPrecomputed::set_max_index, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_base_path", &TBraidBiotCheckPrecomputed::set_base_path, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_c_factor", &TBraidBiotCheckPrecomputed::set_c_factor, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_solution_name", &TBraidBiotCheckPrecomputed::set_solution_name, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_diff_name", &TBraidBiotCheckPrecomputed::set_diff_name, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("lua_write", &TBraidBiotCheckPrecomputed::lua_write, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_log", &TBraidBiotCheckPrecomputed::set_log, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_vtk_write_mode", &TBraidBiotCheckPrecomputed::set_vtk_write_mode, "None", "verbose","set the level of verbose (true / false)")
-                            .add_method("set_io_write_mode", &TBraidBiotCheckPrecomputed::set_io_write_mode, "None", "verbose","set the level of verbose (true / false)")
+                            .add_method("compare_norms", &TBraidBiotCheckPrecomputed::compare_norms, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_num_ref", &TBraidBiotCheckPrecomputed::set_num_ref, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_max_index", &TBraidBiotCheckPrecomputed::set_max_index, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_base_path", &TBraidBiotCheckPrecomputed::set_base_path, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_c_factor", &TBraidBiotCheckPrecomputed::set_c_factor, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_solution_name", &TBraidBiotCheckPrecomputed::set_solution_name, "None",
+                                        "verbose", "set the level of verbose (true / false)")
+                            .add_method("set_diff_name", &TBraidBiotCheckPrecomputed::set_diff_name, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("lua_write", &TBraidBiotCheckPrecomputed::lua_write, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_log", &TBraidBiotCheckPrecomputed::set_log, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_vtk_write_mode", &TBraidBiotCheckPrecomputed::set_vtk_write_mode, "None",
+                                        "verbose", "set the level of verbose (true / false)")
+                            .add_method("set_io_write_mode", &TBraidBiotCheckPrecomputed::set_io_write_mode, "None",
+                                        "verbose", "set the level of verbose (true / false)")
                             .set_construct_as_smart_pointer(true);
                     reg.add_class_to_group(name_gf, "BraidBiotCheckPrecomputed", tag);
                 }
-
 
 
             }
@@ -103,41 +116,41 @@ namespace ug {
                 string tag = GetAlgebraTag<TAlgebra>();
             }
 
-            static void Common(Registry &reg, string grp) { }
+            static void Common(Registry &reg, string grp) {}
 
         };
-    } // end namespace XBraidIntegrator
+        // end namespace XBraidIntegrator
 
 
-    struct FunctionalityFor2D
-    {
-        template <typename TDomain, typename TAlgebra>
-        static void DomainAlgebra(Registry& reg, string grp)
-        {
-            //	useful defines
-            const string suffix = GetDomainAlgebraSuffix<TDomain,TAlgebra>();
-            const string tag = GetDomainAlgebraTag<TDomain,TAlgebra>();
+        struct FunctionalityFor2D {
+            template<typename TDomain, typename TAlgebra>
+            static void DomainAlgebra(Registry &reg, string grp) {
+                //	useful defines
+                const string suffix = GetDomainAlgebraSuffix<TDomain, TAlgebra>();
+                const string tag = GetDomainAlgebraTag<TDomain, TAlgebra>();
 
-            // Braid Time Integrator
-            {
-                typedef BraidBiotCheck<TDomain, TAlgebra> TBiotSpatialNorm;
-                typedef Scriptor<TDomain, TAlgebra> TSpatialNorm;
-                string name_gf = string("BraidBiotCheck").append(suffix);
-                reg.add_class_<TBiotSpatialNorm, TSpatialNorm>(name_gf, grp)
-                        .add_constructor()
-                        .add_method("set_problem", &TBiotSpatialNorm::set_problem, "None", "verbose","set the level of verbose (true / false)")
-                        .add_method("set_napprox", &TBiotSpatialNorm::set_napprox, "None", "verbose","set the level of verbose (true / false)")
+                // Braid Time Integrator
+                {
+                    typedef BraidBiotCheck<TDomain, TAlgebra> TBiotSpatialNorm;
+                    typedef ug::XBraidForUG4::Scriptor<TDomain, TAlgebra> TSpatialNorm;
+                    string name_gf = string("BraidBiotCheck").append(suffix);
+                    reg.add_class_<TBiotSpatialNorm, TSpatialNorm>(name_gf, grp)
+                            .add_constructor()
+                            .add_method("set_problem", &TBiotSpatialNorm::set_problem, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_napprox", &TBiotSpatialNorm::set_napprox, "None", "verbose",
+                                        "set the level of verbose (true / false)")
 
-                                //.add_method("set_adapt_convergence", &TBraidIntegrator::set_adapt_conv, "None", "initial time","set t0 as initial time")
-                        .set_construct_as_smart_pointer(true);
-                reg.add_class_to_group(name_gf, "BraidBiotCheck", tag);
+                                    //.add_method("set_adapt_convergence", &TBraidIntegrator::set_adapt_conv, "None", "initial time","set t0 as initial time")
+                            .set_construct_as_smart_pointer(true);
+                    reg.add_class_to_group(name_gf, "BraidBiotCheck", tag);
+                }
+
+
             }
+        };
 
-
-        }
-    };
-
-
+    }
 
 
 
