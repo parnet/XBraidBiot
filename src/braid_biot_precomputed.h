@@ -201,7 +201,7 @@ namespace ug {
                     // load gridfunction file (ref solution)
                     ug::XBraidUtil::IOGridFunction <TDomain, TAlgebra> io = ug::XBraidUtil::IOGridFunction<TDomain, TAlgebra>();
                     std::stringstream ss_ref;
-                    ss_ref << this->base_path << "/num_ref" << this->num_ref << "/BarryMercer2D_" << zidx
+                    ss_ref << this->base_path << "/num_ref_" << this->num_ref << "/BarryMercer2D_" << zidx
                            << ".gridfunction";
                     io.read(sol, ss_ref.str().c_str());
 
@@ -261,7 +261,7 @@ namespace ug {
                     // load gridfunction file (ref solution)
                     ug::XBraidUtil::IOGridFunction <TDomain, TAlgebra> io = ug::XBraidUtil::IOGridFunction<TDomain, TAlgebra>();
                     std::stringstream ss_ref;
-                    ss_ref << this->base_path << "/num_ref" << this->num_ref << "/BarryMercer2D_" << zidx
+                    ss_ref << this->base_path << "/num_ref_" << this->num_ref << "/BarryMercer2D_" << zidx
                            << ".gridfunction";
                     std::cout << index << "\t";
                     std::cout << ss_ref.str().c_str() << std::endl;
