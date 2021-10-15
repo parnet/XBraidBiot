@@ -18,8 +18,8 @@
 #include "braid_biot_estimator.h"
 #include "biot_error_data.h"
 
-#include "../../Poroelasticity/src/biot_tools.h"
-#include "../../Poroelasticity/src/barry_mercer.h"
+#include "../../XBraidPoroelasticity/src/biot_tools.h"
+#include "../../XBraidPoroelasticity/src/barry_mercer.h"
 
 using namespace ug::XBraidForUG4;
 

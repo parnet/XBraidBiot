@@ -7,8 +7,8 @@
 
 #include "../../XBraidForUG4/src/interface/scriptor.h"
 
-#include "../../Poroelasticity/src/biot_tools.h"
-#include "../../Poroelasticity/src/barry_mercer.h"
+#include "../../XBraidPoroelasticity/src/biot_tools.h"
+#include "../../XBraidPoroelasticity/src/barry_mercer.h"
 
 namespace ug {
 
@@ -20,7 +20,7 @@ namespace ug {
             typedef ug::GridFunction<TDomain, TAlgebra> TGridFunction;
             typedef SmartPtr<TGridFunction> SPGridFunction;
 
-            typedef ug::Poroelasticity::BarryMercerProblem<TDomain, TAlgebra> TProblem;
+            typedef ug::XBraidPoroelasticity::BarryMercerProblem<TDomain, TAlgebra> TProblem;
             typedef SmartPtr<TProblem> SPProblem;
 
             SPProblem m_problem;
@@ -60,6 +60,10 @@ namespace ug {
                 m_problem->m_errData.level = -1;
                 return false;
             };
+
+            bool lua_write(SPGridFunction u, int index, double time){
+                return write(u,index,time);
+            }
 
         };
     }

@@ -140,6 +140,8 @@ namespace ug {
                                         "set the level of verbose (true / false)")
                             .add_method("set_napprox", &TBiotSpatialNorm::set_napprox, "None", "verbose",
                                         "set the level of verbose (true / false)")
+                            .add_method("lua_write", &TBiotSpatialNorm::lua_write, "None", "verbose",
+                                        "set the level of verbose (true / false)")
 
                                     //.add_method("set_adapt_convergence", &TBraidIntegrator::set_adapt_conv, "None", "initial time","set t0 as initial time")
                             .set_construct_as_smart_pointer(true);
