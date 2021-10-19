@@ -47,6 +47,7 @@ namespace ug {
                 double norm_y = ug::H1SemiNorm(*u.get(), "uy", this->m_uorder);
                 double norm_p = ug::L2Norm(*u.get(), "p", this->m_porder);
 
+
                 double pnorm = p_factor * norm_p * norm_p; //p_factor*unorm_p*unorm_p;
                 double unorm = u_factor * (norm_x * norm_x + norm_y * norm_y);
 
