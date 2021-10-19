@@ -243,8 +243,8 @@ namespace ug {
                 }
 
 
-                int zidx = (index * this->max_index_precomputed) / index_level[0];
-                int rem = (index * this->max_index_precomputed) % index_level[0];
+                int zidx = (index * this->max_index_precomputed) / index_level[level];
+                int rem = (index * this->max_index_precomputed) % index_level[level];
 
                 if (rem == 0 && index != 0) {
                     SPGridFunction sol = u->clone_without_values();
