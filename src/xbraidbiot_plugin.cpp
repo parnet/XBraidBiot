@@ -79,6 +79,8 @@ namespace ug {
                                         "set the level of verbose (true / false)")
                             .add_method("lua_write", &TBraidBiotCheckPrecomputed::lua_write, "None", "verbose",
                                         "set the level of verbose (true / false)")
+                            .add_method("lua_compare", &TBraidBiotCheckPrecomputed::lua_compare, "None", "verbose",
+                                        "set the level of verbose (true / false)")
                             .add_method("set_log", &TBraidBiotCheckPrecomputed::set_log, "None", "verbose",
                                         "set the level of verbose (true / false)")
                             .add_method("set_vtk_write_mode", &TBraidBiotCheckPrecomputed::set_vtk_write_mode, "None",

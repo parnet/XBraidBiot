@@ -12,7 +12,7 @@
 #include "../../XBraidForUG4/src/util/scriptor.h"
 #include "../../XBraidForUG4/src/util/paralog.h"
 
-#include "../../XBraidUtil/src/io_gridfunction.h"
+#include "../../XBraidUtil/src/parallel_io_gridfunction.h"
 #include "common/math/math_vector_matrix/math_vector_functions.h"
 #include "lib_algebra/vector_interface/vec_functions.h"
 #include "braid_biot_estimator.h"
@@ -199,10 +199,9 @@ namespace ug {
 
 
                     // load gridfunction file (ref solution)
-                    ug::XBraidUtil::IOGridFunction <TDomain, TAlgebra> io = ug::XBraidUtil::IOGridFunction<TDomain, TAlgebra>();
+                    ug::XBraidUtil::PIOGridFunction <TDomain, TAlgebra> io = ug::XBraidUtil::PIOGridFunction<TDomain, TAlgebra>();
                     std::stringstream ss_ref;
-                    ss_ref << this->base_path << "/num_ref_" << this->num_ref << "/BarryMercer2D_" << zidx
-                           << ".gridfunction";
+                    ss_ref << this->base_path << "/num_ref_" << this->num_ref << "/BarryMercer2D_" << zidx;
                     io.read(sol, ss_ref.str().c_str());
 
                     // substract
@@ -259,10 +258,9 @@ namespace ug {
                     }
 
                     // load gridfunction file (ref solution)
-                    ug::XBraidUtil::IOGridFunction <TDomain, TAlgebra> io = ug::XBraidUtil::IOGridFunction<TDomain, TAlgebra>();
+                    ug::XBraidUtil::PIOGridFunction <TDomain, TAlgebra> io = ug::XBraidUtil::PIOGridFunction<TDomain, TAlgebra>();
                     std::stringstream ss_ref;
-                    ss_ref << this->base_path << "/num_ref_" << this->num_ref << "/BarryMercer2D_" << zidx
-                           << ".gridfunction";
+                    ss_ref << this->base_path << "/num_ref_" << this->num_ref << "/BarryMercer2D_" << zidx;
                     std::cout << index << "\t";
                     std::cout << ss_ref.str().c_str() << std::endl;
                     io.read(sol, ss_ref.str().c_str());
@@ -288,6 +286,59 @@ namespace ug {
 
                 return false; // no error
             };
+
+
+
+
+
+            bool lua_compare(SPGridFunction u,SPGridFunction v, int index, double time, int iteration, int level) {
+
+                int count = 0;
+                auto tuple = std::make_tuple(index, iteration, level);
+                auto it = map.find(tuple);
+                if (it != map.end()) {
+                    count = it->second;
+                    count += 1;
+                    map[tuple] = count;
+                } else {
+                    count = 0;
+                    map.emplace(tuple, 0);
+                }
+
+
+                SPGridFunction udiffsol = u->clone();
+
+                // write vtk output
+                if (this->write_solution) {
+                    m_out_solution->write(u, index, time, iteration, level);
+                }
+                if (this->io_write_solution) {
+                    m_ioout_solution->write(u, index, time, iteration, level);
+                }
+
+                // load gridfunction file (ref solution)
+                ::VecAdd(1.0, *udiffsol.get(), -1.0, *v.get());
+
+                // write vtk error
+                if (this->write_solution) {
+                    m_out_diff->write(udiffsol, index, time, iteration, level);
+                }
+                if (this->io_write_solution) {
+                    m_ioout_diff->write(udiffsol, index, time, iteration, level);
+                }
+
+                // compute norms
+                err_u.compute(u->clone());
+                err_sol.compute(v->clone());
+                err_udiffsol.compute(udiffsol->clone());
+
+                // write norms
+                compare_norms(index, time, iteration, level, count, false);
+                return false; // no error
+            };
+
+
+
         };
     }}
 #endif //UG_PLUGIN_XBRAIDBIOT_BRAIDBIOTPRECOMPUTED_H
