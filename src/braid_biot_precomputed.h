@@ -289,8 +289,6 @@ namespace ug {
 
 
 
-
-
             bool lua_compare(SPGridFunction u,SPGridFunction v, int index, double time, int iteration, int level) {
 
                 int count = 0;

@@ -56,6 +56,23 @@ namespace ug {
 
                 }
 
+                {
+                    typedef BiotBraidDisplacementNorm<TDomain, TAlgebra> TBiotSpatialNorm;
+                    typedef ug::XBraidForUG4::BraidSpatialNorm<TDomain, TAlgebra> TSpatialNorm;
+                    string name_gf = string("BiotBraidDisplacementNorm").append(suffix);
+                    reg.add_class_<TBiotSpatialNorm, TSpatialNorm>(name_gf, grp)
+                            .add_constructor()
+                            .add_method("norm", &TBiotSpatialNorm::norm, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+                            .add_method("set_log", &TBiotSpatialNorm::set_log, "None", "verbose",
+                                        "set the level of verbose (true / false)")
+
+                                    //.add_method("set_adapt_convergence", &TBraidIntegrator::set_adapt_conv, "None", "initial time","set t0 as initial time")
+                            .set_construct_as_smart_pointer(true);
+                    reg.add_class_to_group(name_gf, "BiotBraidDisplacementNorm", tag);
+
+                }
+
                 // Braid Time Integrator
                 {
                     typedef BraidBiotCheckPrecomputed<TDomain, TAlgebra> TBraidBiotCheckPrecomputed;
@@ -90,8 +107,6 @@ namespace ug {
                             .set_construct_as_smart_pointer(true);
                     reg.add_class_to_group(name_gf, "BraidBiotCheckPrecomputed", tag);
                 }
-
-
             }
 
 
